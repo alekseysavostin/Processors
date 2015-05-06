@@ -57,9 +57,6 @@ set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -
 set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_40MHZ
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name MIF_FILE mem.mif
-set_global_assignment -name VHDL_FILE mem.vhd
-set_global_assignment -name VHDL_FILE RegisterROM.vhd
 set_global_assignment -name VHDL_FILE dp.vhd
 set_global_assignment -name MIF_FILE program.mif
 set_global_assignment -name VHDL_FILE cu.vhd

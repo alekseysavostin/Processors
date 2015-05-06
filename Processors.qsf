@@ -58,7 +58,6 @@ set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_40MHZ
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name VHDL_FILE dp.vhd
-set_global_assignment -name MIF_FILE program.mif
 set_global_assignment -name VHDL_FILE cu.vhd
 set_global_assignment -name VHDL_FILE accum_mp.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
@@ -72,4 +71,5 @@ set_global_assignment -name VHDL_FILE increment.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE accum.vwf
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name MIF_FILE accum_program.mif
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

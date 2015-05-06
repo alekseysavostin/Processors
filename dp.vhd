@@ -11,9 +11,9 @@ entity dp is port(
     ASel: in std_logic_vector(1 downto 0);
 	 Aload, Sub: in std_logic;
 	 -- status signals
-	 IR: out std_logic_vector(7 downto 5);
+	 IR: out std_logic_vector(11 downto 8);
 	 Aeq0, Apos: out std_logic;
-	 Output: out std_logic_vector(7 downto 0)); -- datapath output
+	 Output: out std_logic_vector(11 downto 0)); -- datapath output
 end dp;
 
 architecture dpStructutal of dp is
@@ -59,29 +59,29 @@ architecture dpStructutal of dp is
 		  signed_overflow: out std_logic);
     end component;
 	 
-	 signal dp_IR, dp_RAMQ: std_logic_vector(7 downto 0);
-	 signal dp_JMPmux, dp_PC, dp_increment, dp_meminst: std_logic_vector(4 downto 0);
-	 signal dp_Amux, dp_addsub, dp_A: std_logic_vector(7 downto 0);
+	 signal dp_IR, dp_RAMQ: std_logic_vector(11 downto 0);
+	 signal dp_JMPmux, dp_PC, dp_increment, dp_meminst: std_logic_vector(7 downto 0);
+	 signal dp_Amux, dp_addsub, dp_A: std_logic_vector(11 downto 0);
 
 begin
     -- IR
-    U0: reg generic map(8) port map (Clock, Clear, IRLoad, dp_RAMQ, dp_IR);
-	 IR <= dp_IR(7 downto 5);
+    U0: reg generic map(12) port map (Clock, Clear, IRLoad, dp_RAMQ, dp_IR);
+	 IR <= dp_IR(11 downto 8);
 	 -- JMPmux
-	 U1: mux2 generic map(5) port map (JMPmux, dp_IR(4 downto 0), dp_increment, dp_JMPmux);
+	 U1: mux2 generic map(8) port map (JMPmux, dp_IR(7 downto 0), dp_increment, dp_JMPmux);
 	 -- PC
-	 U2: reg generic map(5) port map (Clock, Clear, PCLoad, dp_JMPmux, dp_PC);
+	 U2: reg generic map(8) port map (Clock, Clear, PCLoad, dp_JMPmux, dp_PC);
 	 -- memInst
-	 U3: mux2 generic map(5) port map (Meminst, dp_IR(4 downto 0), dp_PC, dp_meminst);
+	 U3: mux2 generic map(8) port map (Meminst, dp_IR(7 downto 0), dp_PC, dp_meminst);
 	 -- increment
-	 U4: increment generic map(5) port map(dp_PC, dp_increment);
+	 U4: increment generic map(8) port map(dp_PC, dp_increment);
 	 -- memory
 	 U5: lpm_ram_dq
 	     generic map (
-	         lpm_widthad => 5,
+	         lpm_widthad => 8,
 		      lpm_outdata => "UNREGISTERED",
-		      lpm_file => "program.mif",
-		      lpm_width => 8)
+		      lpm_file => "accum_program.mif",
+		      lpm_width => 12)
 		  port map (
 		      data => dp_A,
 				address => dp_meminst,
@@ -89,13 +89,13 @@ begin
 				inclock => Clock,
 				q => dp_RAMQ);
     -- A input mux
-    U6: mux4 generic map(8) port map (Asel, dp_RAMQ, dp_RAMQ, dp_RAMQ, dp_addsub, dp_Amux);
+    U6: mux4 generic map(12) port map (Asel, dp_RAMQ, dp_RAMQ, dp_RAMQ, dp_addsub, dp_Amux);
 	 -- Accumulator
-	 U7: reg generic map(8) port map (Clock, Clear, ALoad, dp_Amux, dp_A);
+	 U7: reg generic map(12) port map (Clock, Clear, ALoad, dp_Amux, dp_A);
 	 -- Adder-substractor
-	 U8: addsub generic map(8) port map (Sub, dp_A, dp_RAMQ, dp_addsub, open, open);
+	 U8: addsub generic map(12) port map (Sub, dp_A, dp_RAMQ, dp_addsub, open, open);
 	 
-	 Aeq0 <= '1' when dp_A = "00000000" else '0';
-	 Apos <= not dp_A(7);
+	 Aeq0 <= '1' when dp_A = "000000000000" else '0';
+	 Apos <= not dp_A(11);
 	 Output <= dp_A;
 end dpStructutal;

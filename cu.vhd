@@ -8,7 +8,7 @@ entity cu is port (
 	 Asel: out std_logic_vector(1 downto 0);
 	 Aload, Sub: out std_logic;
 	 -- status signals
-	 IR: in std_logic_vector(7 downto 5);
+	 IR: in std_logic_vector(11 downto 8);
 	 Aeq0, Apos: in std_logic;
 	 -- control outputs
 	 Halt: out std_logic);
@@ -31,15 +31,15 @@ begin
 				    state <= s_decode;
 				when s_decode =>
 				    case IR is
-					     when "000" => state <= s_load;
-						  when "001" => state <= s_store;
-						  when "010" => state <= s_add;
-						  when "011" => state <= s_sub;
-						  when "100" => state <= s_nop;
+					     when "0000" => state <= s_load;
+						  when "0001" => state <= s_store;
+						  when "0010" => state <= s_add;
+						  when "0011" => state <= s_sub;
+						  when "0100" => state <= s_nop;
 						  --when "100" => state <= s_in;
-						  when "101" => state <= s_jz;
-						  when "110" => state <= s_jpos;
-						  when "111" => state <= s_halt;
+						  when "0101" => state <= s_jz;
+						  when "0110" => state <= s_jpos;
+						  when "0111" => state <= s_halt;
 						  when others => state <= s_halt;
 					 end case;
 				when s_load => state <= s_start;

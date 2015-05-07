@@ -45,7 +45,6 @@ begin
 						  when "1010" => state <= s_alu; -- SHL
 						  when "1011" => state <= s_load; -- LOAD
 						  when "1100" => state <= s_store; -- STORE
-						  --when "1101" => state <= s_alu; -- (duplicate)
 						  when "1101" => state <= s_jz;
 						  when "1110" => state <= s_jpos;
 						  when "1111" => state <= s_halt;
@@ -56,12 +55,6 @@ begin
 				when s_alu => state <= s_start;
 				--when s_nop => state <= s_start;
 				when s_mov => state <= s_start;
-				--when s_in =>
-				--    if (Enter = '0') then -- wait for the Enter key for inputs
-				--	     state <= s_in;
-				--	 else
-				--	     state <= s_start;
-				--	 end if;
 				when s_jz => state <= s_start;
 				when s_jpos => state <= s_start;
 				when s_halt => state <= s_halt;

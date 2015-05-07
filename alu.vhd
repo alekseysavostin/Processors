@@ -23,7 +23,7 @@ begin
         when "0010" =>
             F <= A or B;
         when "0011" =>
-            F <= A xor A;
+            F <= A xor B;
         when "0100" =>
             F <= not A;
         when "0101" =>

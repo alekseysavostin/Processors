@@ -66,7 +66,6 @@ set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name VHDL_FILE mux2.vhd
 set_global_assignment -name VHDL_FILE reg.vhd
 set_global_assignment -name VHDL_FILE mux4.vhd
-set_global_assignment -name VHDL_FILE addsub.vhd
 set_global_assignment -name VHDL_FILE increment.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE accum.vwf
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"

@@ -263,116 +263,6 @@ SIGNAL("Output[8]")
 	PARENT = "Output";
 }
 
-SIGNAL("cu:U0|state.s_add")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_decode")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_fetch")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_halt")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_jpos")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_jz")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_load")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_nop")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = INPUT;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_start")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_store")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
-SIGNAL("cu:U0|state.s_sub")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = REGISTERED;
-	PARENT = "";
-}
-
 SIGNAL("Reset")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
@@ -733,6 +623,106 @@ SIGNAL("dp:U1|reg:U7|Q[0]")
 	PARENT = "dp:U1|reg:U7|Q";
 }
 
+SIGNAL("cu:U0|state.s_alu")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_decode")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_fetch")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_halt")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_jpos")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_jz")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_load")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_start")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_store")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = REGISTERED;
+	PARENT = "";
+}
+
+SIGNAL("cu:U0|state.s_mov")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = BURIED;
+	PARENT = "";
+}
+
 TRANSITION_LIST("Output[7]")
 {
 	NODE
@@ -915,105 +905,6 @@ TRANSITION_LIST("Output[8]")
 	{
 		REPEAT = 1;
 		LEVEL X FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_add")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_decode")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_fetch")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_halt")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_jpos")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_jz")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_load")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_nop")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_start")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_store")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
-	}
-}
-
-TRANSITION_LIST("cu:U0|state.s_sub")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL U FOR 1000.0;
 	}
 }
 
@@ -1307,6 +1198,96 @@ TRANSITION_LIST("dp:U1|reg:U7|Q[1]")
 }
 
 TRANSITION_LIST("dp:U1|reg:U7|Q[0]")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_alu")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_decode")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_fetch")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_halt")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_jpos")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_jz")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_load")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_start")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_store")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL U FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("cu:U0|state.s_mov")
 {
 	NODE
 	{
@@ -1895,7 +1876,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_add";
+	CHANNEL = "Halt";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 58;
@@ -1904,7 +1885,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_decode";
+	CHANNEL = "cu:U0|state.s_start";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 59;
@@ -1922,7 +1903,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_halt";
+	CHANNEL = "cu:U0|state.s_decode";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 61;
@@ -1931,7 +1912,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_jpos";
+	CHANNEL = "cu:U0|state.s_alu";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 62;
@@ -1940,7 +1921,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_jz";
+	CHANNEL = "cu:U0|state.s_halt";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 63;
@@ -1949,7 +1930,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_load";
+	CHANNEL = "cu:U0|state.s_jpos";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 64;
@@ -1958,7 +1939,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_nop";
+	CHANNEL = "cu:U0|state.s_jz";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 65;
@@ -1967,7 +1948,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_start";
+	CHANNEL = "cu:U0|state.s_load";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 66;
@@ -1985,19 +1966,10 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "cu:U0|state.s_sub";
+	CHANNEL = "cu:U0|state.s_mov";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 68;
-	TREE_LEVEL = 0;
-}
-
-DISPLAY_LINE
-{
-	CHANNEL = "Halt";
-	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
-	TREE_INDEX = 69;
 	TREE_LEVEL = 0;
 }
 

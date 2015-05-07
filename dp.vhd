@@ -9,11 +9,11 @@ entity dp is port(
 	 -- control signals
     IRLoad, JMPmux, PCload, MemInst, MemWr: in std_logic;
     ASel: in std_logic_vector(1 downto 0);
-	 Aload, Sub: in std_logic;
+	 Aload: in std_logic;
+	 ALUSel: in std_logic_vector(3 downto 0); -- select for operations
 	 -- status signals
 	 IR: out std_logic_vector(11 downto 8);
-	 Aeq0, Apos: out std_logic;
-	 Output: out std_logic_vector(11 downto 0)); -- datapath output
+	 Aeq0, Apos: out std_logic);
 end dp;
 
 architecture dpStructutal of dp is
@@ -48,20 +48,17 @@ architecture dpStructutal of dp is
 		  Y: out std_logic_vector(size-1 downto 0));
     end component;
 	 
-	 component addsub
-	 generic(n: integer := 4);
-	 port (
-	     S: in std_logic;
-		  A: in std_logic_vector(n-1 downto 0);
-		  B: in std_logic_vector(n-1 downto 0);
-		  F: out std_logic_vector(n-1 downto 0);
-		  unsigned_overflow: out std_logic;
-		  signed_overflow: out std_logic);
+	 component alu
+    generic (size: integer := 8);
+    port (
+        ALUSel: IN STD_LOGIC_VECTOR(3 DOWNTO 0); -- select for operations
+        A, B: IN STD_LOGIC_VECTOR(size-1 DOWNTO 0); -- input operands
+        F: OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0)); -- output
     end component;
 	 
 	 signal dp_IR, dp_RAMQ: std_logic_vector(11 downto 0);
 	 signal dp_JMPmux, dp_PC, dp_increment, dp_meminst: std_logic_vector(7 downto 0);
-	 signal dp_Amux, dp_addsub, dp_A: std_logic_vector(11 downto 0);
+	 signal dp_Amux, dp_alures, dp_A: std_logic_vector(11 downto 0);
 
 begin
     -- IR
@@ -89,13 +86,12 @@ begin
 				inclock => Clock,
 				q => dp_RAMQ);
     -- A input mux
-    U6: mux4 generic map(12) port map (Asel, dp_RAMQ, dp_RAMQ, dp_RAMQ, dp_addsub, dp_Amux);
+    U6: mux4 generic map(12) port map (Asel, dp_RAMQ, dp_RAMQ, "0000" & dp_IR(7 downto 0), dp_alures, dp_Amux);
 	 -- Accumulator
 	 U7: reg generic map(12) port map (Clock, Clear, ALoad, dp_Amux, dp_A);
-	 -- Adder-substractor
-	 U8: addsub generic map(12) port map (Sub, dp_A, dp_RAMQ, dp_addsub, open, open);
+	 -- ALU
+	 U8: alu generic map(12) port map (ALUSel, dp_A, dp_RAMQ, dp_alures);
 	 
 	 Aeq0 <= '1' when dp_A = "000000000000" else '0';
 	 Apos <= not dp_A(11);
-	 Output <= dp_A;
 end dpStructutal;

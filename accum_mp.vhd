@@ -7,7 +7,7 @@ entity accum_mp is port (
 end accum_mp;
 
 architecture accum_mpSructural of accum_mp is
-  component cu PORT (
+  component accum_cu PORT (
       Clock, Reset: in std_logic;
 		-- control signals
 		IRload, JMPmux, PCload, MemInst, MemWr: out std_logic;
@@ -20,7 +20,7 @@ architecture accum_mpSructural of accum_mp is
 		Halt: out std_logic);
 	end component;
 	
-	component dp PORT (
+	component accum_dp PORT (
 	    Clock, Clear: in std_logic;
 		 -- control signals
 		 IRload, JMPmux, PCload, MemInst, MemWr: in std_logic;
@@ -40,7 +40,7 @@ architecture accum_mpSructural of accum_mp is
 	 signal mp_IR: std_logic_vector(11 downto 8);
 	 signal mp_Aeq0, mp_Apos: std_logic;
 begin
-    U0: cu port map (
+    U0: accum_cu port map (
 	     Clock, Reset,
 		  --control signals
 		  mp_IRload, mp_JMPmux, mp_PCload, mp_MemInst, mp_MemWr,
@@ -50,7 +50,7 @@ begin
 		  mp_IR,
 		  mp_Aeq0, mp_Apos,
 		  Halt);
-	 U1: dp port map (
+	 U1: accum_dp port map (
 	     Clock, Reset,
 		  --control signals
 		  mp_IRload, mp_JMPmux, mp_PCload, mp_MemInst, mp_MemWr,

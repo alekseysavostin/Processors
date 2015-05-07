@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 library lpm; -- for memory
 use lpm.lpm_components.all;
 
-entity dp is port(
+entity accum_dp is port(
     Clock, Clear: in std_logic;
 	 -- control signals
     IRLoad, JMPmux, PCload, MemInst, MemWr: in std_logic;
@@ -14,9 +14,9 @@ entity dp is port(
 	 -- status signals
 	 IR: out std_logic_vector(11 downto 8);
 	 Aeq0, Apos: out std_logic);
-end dp;
+end accum_dp;
 
-architecture dpStructutal of dp is
+architecture dpStructutal of accum_dp is
     component reg
 	 generic(size: integer := 4);
 	 port (

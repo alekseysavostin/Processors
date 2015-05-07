@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity cu is port (
+entity accum_cu is port (
     Clock, Reset: in std_logic;
 	 -- control signals
 	 IRLoad, JMPmux, PCload, MemInst, MemWr: out std_logic;
@@ -13,9 +13,9 @@ entity cu is port (
 	 Aeq0, Apos: in std_logic;
 	 -- control outputs
 	 Halt: out std_logic);
-end cu;
+end accum_cu;
 
-architecture FSM of cu is
+architecture FSM of accum_cu is
     type state_type is (s_start, s_fetch, s_decode,
 	     s_load, s_store, s_alu, s_mov, s_jz, s_jpos, s_halt); -- s_nop
 	 signal state: state_type;

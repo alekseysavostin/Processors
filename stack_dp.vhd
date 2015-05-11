@@ -7,13 +7,16 @@ use lpm.lpm_components.all;
 entity stack_dp is port(
     Clock, Clear: in std_logic;
 	 -- control signals
-    IRLoad, JMPmux, PCload, MemInst, MemWr: in std_logic;
+    IRLoad, JMPmux, PCload, MemInst: in std_logic;
     ASel: in std_logic_vector(1 downto 0);
-	 Aload, InitLfsr, SetDimension, SetPolynom, NextLfsr: in std_logic;
+	 InitLfsr, SetDimension, SetPolynom, NextLfsr: in std_logic;
+	 EnableStack: in std_logic;
+	 StackOperation: in std_logic_vector(1 downto 0); 
 	 ALUSel: in std_logic_vector(2 downto 0); -- select for operations
 	 -- status signals
 	 IR: out std_logic_vector(11 downto 8);
-	 Aeq0, Apos: out std_logic);
+	 Aeq0, Apos: out std_logic;
+	 Data_Out1, Data_Out2: out std_logic_vector(15 downto 0));
 end stack_dp;
 
 architecture dpStructutal of stack_dp is
@@ -68,28 +71,30 @@ architecture dpStructutal of stack_dp is
 	 
 	 component stack is generic(constant size: integer := 16; constant RAMSize: integer := 256);
     port(
-        Clk: in std_logic;  --Clock for the stack.
-	     Reset: in std_logic; --Reset
-        Enable: in std_logic;  --Enable the stack. Otherwise neither push nor pop will happen.
-        Data_In: in std_logic_vector(size-1 downto 0);  --Data to be pushed to stack
-	     PUSH_barPOP: in std_logic;  --active low for POP and active high for PUSH.
-        Data_Out: out std_logic_vector(size-1 downto 0);  --Data popped from the stack.
-        Stack_Full: out std_logic;  --Goes high when the stack is full.
-        Stack_Empty: out std_logic  --Goes high when the stack is empty.
-    );
+    Clk: in std_logic;  --Clock for the stack.
+	 Reset: in std_logic; --Reset
+    Enable: in std_logic;  --Enable the stack. Otherwise neither push nor pop will happen.
+    Data_In: in std_logic_vector(size-1 downto 0);  --Data to be pushed to stack
+	 Operation: in std_logic_vector(1 downto 0);
+    Data_Out1: out std_logic_vector(size-1 downto 0);
+	 Data_Out2: out std_logic_vector(size-1 downto 0));
     end component;
 	 
 	 signal dp_IR: std_logic_vector(11 downto 0);
 	 signal dp_JMPmux, dp_PC, dp_increment, dp_meminst: std_logic_vector(7 downto 0);
-	 signal dp_RAMQ, dp_Amux, dp_alures, dp_A, dp_LfsrOut, dp_Polynom: std_logic_vector(15 downto 0);
+	 signal dp_StackOut1, dp_StackOut2, dp_RAMQ, dp_StackMux, dp_alures, dp_LfsrOut, dp_Polynom, tt1: std_logic_vector(15 downto 0);
 	 signal dp_Dimension: std_logic_vector (3 downto 0);
+	 --signal dp_StackOut1Temp, dp_StackOut2Temp: std_logic_vector(15 downto 0);
+	 
 begin
-    --U0: stack generic map(16) port map (Clock, Clear, dp_EnableStack, stack_in, PushOrPop, stack_out, open, open);
+    U0: stack generic map(16, 32) port map (Clock, Clear, EnableStack, dp_StackMux, StackOperation, dp_StackOut1, dp_StackOut2);
     -- IR
     U_IR: reg generic map(12) port map (Clock, Clear, IRLoad, dp_RAMQ(11 downto 0), dp_IR);
 	 IR <= dp_IR(11 downto 8);
 	 -- JMPmux
 	 U_PCM: mux2 generic map(8) port map (JMPmux, dp_IR(7 downto 0), dp_increment, dp_JMPmux);
+	 --U_TMP1: reg generic map(16) port map (Clock, Clear, EnableStack, dp_StackOut1, dp_StackOut1Temp);
+	 --U_TMP2: reg generic map(16) port map (Clock, Clear, EnableStack, dp_StackOut2, dp_StackOut2Temp);
 	 -- PC
 	 U_PC: reg generic map(8) port map (Clock, Clear, PCLoad, dp_JMPmux, dp_PC);
 	 -- memInst
@@ -104,22 +109,23 @@ begin
 		      lpm_file => "stack_program.mif",
 		      lpm_width => 16)
 		  port map (
-		      data => dp_A,
+		      data => (others => '0'),
 				address => dp_meminst,
-				we => MemWr,
+				we => '0',
 				inclock => Clock,
 				q => dp_RAMQ);
     -- A input mux
-    U_AMux: mux4 generic map(16) port map (Asel, dp_LfsrOut, dp_RAMQ, "00000000" & dp_IR(7 downto 0), dp_alures, dp_Amux);
-	 -- Accumulator
-	 U_AR: reg generic map(16) port map (Clock, Clear, ALoad, dp_Amux, dp_A);
+    U_AMux: mux4 generic map(16) port map (Asel, dp_LfsrOut, dp_RAMQ, "00000000" & dp_IR(7 downto 0), dp_alures, dp_StackMux);
 	 -- ALU
-	 U_Alu: alu generic map(16) port map (ALUSel, dp_A, dp_RAMQ, dp_alures);
+	 U_Alu: alu generic map(16) port map (ALUSel, dp_StackOut1, dp_StackOut2, dp_alures);
 	 
-	 U_lfsr_polynom: reg generic map(16) port map (Clock, Clear, SetPolynom, dp_A, dp_Polynom);
-	 U_lfsr_dimension: reg generic map(4) port map (Clock, Clear, SetDimension, dp_A(3 downto 0), dp_Dimension);
-	 U_lfsr: lfsr generic map(16) port map (Clock, Clear, InitLfsr, NextLfsr, dp_Dimension, dp_Polynom, dp_A, dp_LfsrOut);
+	 U_lfsr_polynom: reg generic map(16) port map (Clock, Clear, SetPolynom, dp_StackOut1, dp_Polynom);
+	 U_lfsr_dimension: reg generic map(4) port map (Clock, Clear, SetDimension, dp_StackOut1(3 downto 0), dp_Dimension);
+	 --U_LR: reg generic map(16) port map (Clock, Clear, '1', dp_LfsrOut, tt1);
+	 U_lfsr: lfsr generic map(16) port map (Clock, Clear, InitLfsr, NextLfsr, dp_Dimension, dp_Polynom, dp_StackOut1, dp_LfsrOut);
 	 
-	 Aeq0 <= '1' when dp_A = "000000000000" else '0';
-	 Apos <= not dp_A(15);
+	 Aeq0 <= '1' when dp_StackOut1 = "0000000000000000" else '0';
+	 Apos <= not dp_StackOut1(15);
+	 Data_Out1 <= dp_StackOut1;
+	 Data_Out2 <= dp_StackOut2;
 end dpStructutal;

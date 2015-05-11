@@ -106,6 +106,6 @@ begin
 	 U_lfsr_dimension: reg generic map(4) port map (Clock, Clear, SetDimension, dp_A(3 downto 0), dp_Dimension);
 	 U_lfsr: lfsr generic map(16) port map (Clock, Clear, InitLfsr, NextLfsr, dp_Dimension, dp_Polynom, dp_A, dp_LfsrOut);
 	 
-	 Aeq0 <= '1' when dp_A = "000000000000" else '0';
+	 Aeq0 <= '1' when dp_A = "0000000000000000" else '0';
 	 Apos <= not dp_A(15);
 end dpStructutal;

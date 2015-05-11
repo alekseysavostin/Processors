@@ -17,7 +17,7 @@ end accum_cu;
 
 architecture FSM of accum_cu is
     type state_type is (s_start, s_fetch, s_decode,
-	     s_load, s_store, s_alu, s_mov, s_next, s_setd, s_set_poly, s_initLfsr, s_nop, s_jz, s_jpos, s_halt); -- s_nop
+	     s_load, s_store, s_alu, s_mov, s_next, s_setd, s_set_poly, s_initLfsr, s_jz, s_jpos, s_halt); -- s_nop
 	 signal state: state_type;
 begin
     next_state_logic: process (Reset, Clock)
@@ -54,10 +54,10 @@ begin
 				when s_store => state <= s_start;
 				when s_alu => state <= s_start;
 				when s_setd => state <= s_start;
-            when s_set_poly => state <= s_start;
-            when s_initLfsr => state <= s_start;
-				when s_nop => state <= s_start;
+				when s_set_poly => state <= s_start;
+				when s_initLfsr => state <= s_start;
 				when s_mov => state <= s_start;
+				when s_next => state <= s_start;
 				when s_jz => state <= s_start;
 				when s_jpos => state <= s_start;
 				when s_halt => state <= s_halt;

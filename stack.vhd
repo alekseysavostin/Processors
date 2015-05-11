@@ -25,19 +25,21 @@ begin
         if(rising_edge(Clk) and Enable = '1') then
 		      if (Reset = '1') then
 				    stack_ptr <= RAMSize-1;
-            elsif (Operation = "00") then --POP section.
+            end if;
+            case Operation is
+            when "00" => --POP section.
                 stack_ptr <= stack_ptr + 1; --Data has to be taken from the next highest address(empty descending type stack).
-            elsif (Operation = "01") then --PUSH section.
+            when "01" => --PUSH section.
                 stack_mem(stack_ptr) <= Data_In; --Data pushed to the current address.
                 stack_ptr <= stack_ptr - 1;
-            elsif (Operation = "10") then
+            when "10" =>
                 stack_mem(stack_ptr+1) <= Data_In;
-				elsif (Operation = "11") then
+				when "11" =>
                 stack_mem(stack_ptr+2) <= Data_In;
 					 stack_ptr <= stack_ptr + 1;
-            end if; 
+            end case; 
         end if; 
     end process;
-	 Data_Out1 <= stack_mem(stack_ptr+1); 
-	 Data_Out2 <= stack_mem(stack_ptr+2);
+    Data_Out1 <= stack_mem(stack_ptr+1); 
+    Data_Out2 <= stack_mem(stack_ptr+2);
 end Behavioral;

@@ -9,7 +9,7 @@ entity register_dp is port(
 	 -- control signals
     IRLoad, JMPmux, PCload, MemInst, MemWr: in std_logic;
     ASel: in std_logic_vector(1 downto 0);
-	 Aload, InitLfsr, SetDimension, SetPolynom, NextLfsr: in std_logic;
+	 Aload, Bload, InitLfsr, SetDimension, SetPolynom, NextLfsr: in std_logic;
 	 ALUSel: in std_logic_vector(2 downto 0); -- select for operations
 	 -- status signals
 	 IR: out std_logic_vector(11 downto 8);
@@ -68,7 +68,7 @@ architecture dpStructutal of register_dp is
 	 
 	 signal dp_IR: std_logic_vector(11 downto 0);
 	 signal dp_JMPmux, dp_PC, dp_increment, dp_meminst: std_logic_vector(7 downto 0);
-	 signal dp_RAMQ, dp_Amux, dp_alures, dp_A, dp_LfsrOut, dp_Polynom: std_logic_vector(15 downto 0);
+	 signal dp_RAMQ, dp_Amux, dp_alures, dp_A, dp_B, dp_LfsrOut, dp_Polynom: std_logic_vector(15 downto 0);
 	 signal dp_Dimension: std_logic_vector (3 downto 0);
 begin
     -- IR
@@ -97,14 +97,16 @@ begin
 				q => dp_RAMQ);
     -- A input mux
     U_AMux: mux4 generic map(16) port map (Asel, dp_LfsrOut, dp_RAMQ, "00000000" & dp_IR(7 downto 0), dp_alures, dp_Amux);
-	 -- Accumulator
+	 -- Register A
 	 U_AR: reg generic map(16) port map (Clock, Clear, ALoad, dp_Amux, dp_A);
+	 -- Register B
+	 U_BR: reg generic map(16) port map (Clock, Clear, BLoad, "00000000" & dp_IR(7 downto 0), dp_B);
 	 -- ALU
-	 U_Alu: alu generic map(16) port map (ALUSel, dp_A, dp_RAMQ, dp_alures);
+	 U_Alu: alu generic map(16) port map (ALUSel, dp_A, dp_B, dp_alures);
 	 
-	 U_lfsr_polynom: reg generic map(16) port map (Clock, Clear, SetPolynom, dp_A, dp_Polynom);
-	 U_lfsr_dimension: reg generic map(4) port map (Clock, Clear, SetDimension, dp_A(3 downto 0), dp_Dimension);
-	 U_lfsr: lfsr generic map(16) port map (Clock, Clear, InitLfsr, NextLfsr, dp_Dimension, dp_Polynom, dp_A, dp_LfsrOut);
+	 U_lfsr_polynom: reg generic map(16) port map (Clock, Clear, SetPolynom, "00000000" & dp_IR(7 downto 0), dp_Polynom);
+	 U_lfsr_dimension: reg generic map(4) port map (Clock, Clear, SetDimension, dp_IR(3 downto 0), dp_Dimension);
+	 U_lfsr: lfsr generic map(16) port map (Clock, Clear, InitLfsr, NextLfsr, dp_Dimension, dp_Polynom, "00000000" & dp_IR(7 downto 0), dp_LfsrOut);
 	 
 	 Aeq0 <= '1' when dp_A = "0000000000000000" else '0';
 	 Apos <= not dp_A(15);

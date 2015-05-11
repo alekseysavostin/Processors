@@ -26,7 +26,7 @@
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		Processors_assignment_defaults.qdf
+#		ProcessorsAccum_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Arria II GX"
 set_global_assignment -name DEVICE EP2AGX45DF25I5
-set_global_assignment -name TOP_LEVEL_ENTITY stack
+set_global_assignment -name TOP_LEVEL_ENTITY stack_mp
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 14.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "01:27:34  APRIL 28, 2015"
 set_global_assignment -name LAST_QUARTUS_VERSION 14.1.0

@@ -87,7 +87,7 @@ architecture dpStructutal of stack_dp is
 	 --signal dp_StackOut1Temp, dp_StackOut2Temp: std_logic_vector(15 downto 0);
 	 
 begin
-    U0: stack generic map(16, 32) port map (Clock, Clear, EnableStack, dp_StackMux, StackOperation, dp_StackOut1, dp_StackOut2);
+    U0: stack generic map(16, 16) port map (Clock, Clear, EnableStack, dp_StackMux, StackOperation, dp_StackOut1, dp_StackOut2);
     -- IR
     U_IR: reg generic map(12) port map (Clock, Clear, IRLoad, dp_RAMQ(11 downto 0), dp_IR);
 	 IR <= dp_IR(11 downto 8);

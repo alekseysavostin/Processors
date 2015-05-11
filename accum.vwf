@@ -559,7 +559,7 @@ SIGNAL("accum_dp:U_dp|reg:U_PC|Q")
 	SIGNAL_TYPE = BUS;
 	WIDTH = 8;
 	LSB_INDEX = 0;
-	DIRECTION = BURIED;
+	DIRECTION = REGISTERED;
 	PARENT = "";
 }
 

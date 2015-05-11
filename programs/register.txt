@@ -1,9 +1,9 @@
-00 C04 setd, 4
-01 B03 setpoly, 3
-02 A08 initlfsr, 8
-03 908 mov b, s
-04 700 m: next
-05 300 xor a, b
-06 D08 jz halt
-07 E04 jp m
-08 F00 halt
+00 C004 setd, 4
+01 B003 setpoly, 3
+02 A008 initlfsr, 8
+03 9008 mov b, s
+04 7000 m: next
+05 3000 xor a, b
+06 D008 jz halt
+07 E004 jp m
+08 F000 halt

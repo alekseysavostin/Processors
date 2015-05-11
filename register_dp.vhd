@@ -12,7 +12,7 @@ entity register_dp is port(
 	 Aload, Bload, InitLfsr, SetDimension, SetPolynom, NextLfsr: in std_logic;
 	 ALUSel: in std_logic_vector(2 downto 0); -- select for operations
 	 -- status signals
-	 IR: out std_logic_vector(11 downto 8);
+	 IR: out std_logic_vector(15 downto 8);
 	 Aeq0, Apos: out std_logic);
 end register_dp;
 
@@ -66,14 +66,14 @@ architecture dpStructutal of register_dp is
 		  LfsrOut: out std_logic_vector (size-1 downto 0));
     end component;
 	 
-	 signal dp_IR: std_logic_vector(11 downto 0);
+	 signal dp_IR: std_logic_vector(15 downto 0);
 	 signal dp_JMPmux, dp_PC, dp_increment, dp_meminst: std_logic_vector(7 downto 0);
 	 signal dp_RAMQ, dp_Amux, dp_alures, dp_A, dp_B, dp_LfsrOut, dp_Polynom: std_logic_vector(15 downto 0);
 	 signal dp_Dimension: std_logic_vector (3 downto 0);
 begin
     -- IR
-    U_IR: reg generic map(12) port map (Clock, Clear, IRLoad, dp_RAMQ(11 downto 0), dp_IR);
-	 IR <= dp_IR(11 downto 8);
+    U_IR: reg generic map(16) port map (Clock, Clear, IRLoad, dp_RAMQ(15 downto 0), dp_IR);
+	 IR <= dp_IR(15 downto 8);
 	 -- JMPmux
 	 U_PCM: mux2 generic map(8) port map (JMPmux, dp_IR(7 downto 0), dp_increment, dp_JMPmux);
 	 -- PC

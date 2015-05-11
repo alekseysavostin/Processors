@@ -9,7 +9,7 @@ entity register_cu is port (
 	 Aload, Bload, InitLfsr, SetDimension, SetPolynom, NextLfsr: out std_logic;
 	 ALUSel: out std_logic_vector(2 downto 0); -- select for operations
 	 -- status signals
-	 IR: in std_logic_vector(11 downto 8);
+	 IR: in std_logic_vector(15 downto 8);
 	 Aeq0, Apos: in std_logic;
 	 -- control outputs
 	 Halt: out std_logic);
@@ -31,7 +31,7 @@ begin
 				when s_fetch =>
 				    state <= s_decode;
 				when s_decode =>
-				    case IR is
+				    case IR(15 downto 12) is
 					     when "0000" => state <= s_nop;      -- NOP
 						  when "0001" => state <= s_alu;      -- AND
 						  when "0010" => state <= s_alu;      -- OR
